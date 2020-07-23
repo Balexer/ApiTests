@@ -1,8 +1,6 @@
 package org.techmeskills.aqa5.auf.apiTests;
 
-import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
-import org.apache.http.protocol.HTTP;
 import org.techmeskills.aqa5.auf.baseEntity.BaseApiTest;
 import org.testng.annotations.Test;
 
@@ -10,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class AlexApiTests extends BaseApiTest {
 
@@ -22,7 +22,11 @@ public class AlexApiTests extends BaseApiTest {
                 .when()
                 .get(endpoint)
                 .then().log().body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("page", is(2))
+                .body("per_page", is(6))
+                .body("total", is(12));
+
     }
 
     @Test
@@ -34,7 +38,11 @@ public class AlexApiTests extends BaseApiTest {
                 .when()
                 .get(endpoint)
                 .then().log().body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("data.id", is(2))
+                .body("data.email", equalTo("janet.weaver@reqres.in"))
+                .body("data.first_name", equalTo("Janet"))
+                .body("data.last_name", equalTo("Weaver"));
     }
 
     @Test
@@ -58,7 +66,16 @@ public class AlexApiTests extends BaseApiTest {
                 .when()
                 .get(endpoint)
                 .then().log().body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("page", is(1))
+                .body("per_page", is(6))
+                .body("total", is(12))
+                .body("data.get(0).id", is(1))
+                .body("data.get(1).id", is(2))
+                .body("data.get(2).id", is(3))
+                .body("data.get(3).id", is(4))
+                .body("data.get(4).id", is(5))
+                .body("data.get(5).id", is(6));
     }
 
     @Test
@@ -70,7 +87,11 @@ public class AlexApiTests extends BaseApiTest {
                 .when()
                 .get(endpoint)
                 .then().log().body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("data.id", is(2))
+                .body("data.name", equalTo("fuchsia rose"))
+                .body("data.year", is(2001));
+
     }
 
     @Test
@@ -94,7 +115,16 @@ public class AlexApiTests extends BaseApiTest {
                 .when()
                 .get(endpoint)
                 .then().log().body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("page", is(1))
+                .body("per_page", is(6))
+                .body("total", is(12))
+                .body("data.get(0).id", is(1))
+                .body("data.get(1).id", is(2))
+                .body("data.get(2).id", is(3))
+                .body("data.get(3).id", is(4))
+                .body("data.get(4).id", is(5))
+                .body("data.get(5).id", is(6));
     }
 
     @Test
@@ -113,7 +143,10 @@ public class AlexApiTests extends BaseApiTest {
                 .then()
                 .log()
                 .body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("id", is(4))
+                .body("token", equalTo("QpwL5tke4Pnpja7X4"));
+
     }
 
     @Test
@@ -132,7 +165,8 @@ public class AlexApiTests extends BaseApiTest {
                 .then()
                 .log()
                 .body()
-                .statusCode(HttpStatus.SC_BAD_REQUEST);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .body("error", equalTo("Missing password"));
     }
 
     @Test
@@ -151,7 +185,9 @@ public class AlexApiTests extends BaseApiTest {
                 .then()
                 .log()
                 .body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("token", equalTo("QpwL5tke4Pnpja7X4"));
+
     }
 
     @Test
@@ -170,7 +206,8 @@ public class AlexApiTests extends BaseApiTest {
                 .then()
                 .log()
                 .body()
-                .statusCode(HttpStatus.SC_BAD_REQUEST);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .body("error", equalTo("Missing password"));
     }
 
     @Test
@@ -189,7 +226,10 @@ public class AlexApiTests extends BaseApiTest {
                 .then()
                 .log()
                 .body()
-                .statusCode(HttpStatus.SC_CREATED);
+                .statusCode(HttpStatus.SC_CREATED)
+                .body("name", equalTo("morpheus"))
+                .body("job", equalTo("leader"));
+
     }
 
     @Test
@@ -208,7 +248,10 @@ public class AlexApiTests extends BaseApiTest {
                 .then()
                 .log()
                 .body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("name", equalTo("morpheus"))
+                .body("job", equalTo("zion resident"));
+
     }
 
     @Test
@@ -227,7 +270,9 @@ public class AlexApiTests extends BaseApiTest {
                 .then()
                 .log()
                 .body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("name", equalTo("morpheus"))
+                .body("job", equalTo("zion resident"));
     }
 
     @Test
